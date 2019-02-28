@@ -25,6 +25,8 @@ def read_file(filename = sys.argv[1]):
 
 R, C, L, H, pizza = read_file()
 
+cut_pizza = []
+
 class Slice(object):
     def __init__(self, r1, c1, r2, c2):     #Constructor for a slice
         self.r1 = r1
@@ -38,7 +40,7 @@ class Slice(object):
     def __getTomatoCount__(self):
         count = 0
         for i in range(self.r1, self.r2 + 1):
-            for j in range(self.r2, self.c2 + 1):
+            for j in range(self.c1, self.c2 + 1):
                 count += pizza[i][j] == 1
             return count
 
@@ -48,3 +50,24 @@ class Slice(object):
         length = tomato >= L and mushroom >= L
         height = tomato + mushroom <= H
         return length and height
+
+#function to find the best slice given a start and end point
+def best_slice(r1, r2, _slice):
+    c1 = 0
+    total = 0
+    while (c1 < C):
+        c2 = c1                     #start with slice consisting only 1 column
+        checkBefore = False
+        while (c2 < C):
+            if (Slice(r1, c1, r2, c2).__check__()):     #check if the slice is delimited by r1, r2
+                checkBefore = True
+            elif (checkBefore == True):
+                _slice = np.append(_slice, Slice(r1, c1, r2, c2 - 1))       #if condition is true, push the previous slice to the list
+                total += len(_slice[-1])        #reference the last element of a list
+                break
+            c2 += 1
+        if (checkBefore == False):          #cant create any slice from this column. skip this, start with the next
+            c1 += 1
+        else:
+            c1 = c2
+    return total
