@@ -58,7 +58,7 @@ def best_slice(r1, r2, _slice):
                 checkBefore = True
             elif (checkBefore == True):
                 _slice = np.append(_slice, Slice(r1, c1, r2, c2 - 1))       #if condition is true, push the previous slice to the list
-                total += len(_slice[-1])        #reference the last element of a list
+                total += _slice[-1].__size__()        #reference the last element of a list
                 break
             c2 += 1
         if (checkBefore == False):          #cant create any slice from this column. skip this, start with the next
@@ -70,7 +70,8 @@ def best_slice(r1, r2, _slice):
 def find_pizza_cut():
     r1 = 0
     while (r1 < R):                 #Continue the algo while there is an empty row availaible
-        r2 = r1, bestVal = -1        #start with r2 = r1
+        r2 = r1                     #start with r2 = r1
+        bestVal = -1
         slice1 = []
         while (r2 < R):
             slice2 = []
@@ -81,17 +82,15 @@ def find_pizza_cut():
             bestVal = res
             slice1 = slice2
             r2 += 1
-        for i in len(slice2):
+        for i in range(len(slice2)):
             cut_pizza = np.append(cut_pizza, slice2[i])
         r1 = r2 + 1
 
-# find_pizza_cut()
-# out = open("output_example.txt", "w+")
-# out.write(str())
-def main():
+def write_output():
     find_pizza_cut()
     out = open("a_example_out.txt", "w+")
-    out.write(str() + "\n")
-    for cut in cut_pizza:
-        out.write("%d %d %d %d \n" % (cut_pizza[0], cut_pizza[1], cut_pizza[2], cut_pizza[3]))
-    print(cut_pizza)
+    out.write(str(len(cut_pizza)) + "\n")
+    for i in cut_pizza:
+        out.write("%d %d %d %d\n", cut_pizza[i].r1, cut_pizza[i].c1, cut_pizza[i].r2, cut_pizza[i].c2)
+
+write_output()
