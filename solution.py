@@ -1,11 +1,6 @@
 import numpy as np
 import sys
 
-# R (1 ≤ R ≤ 1000) is the number of rows,
-# C (1 ≤ C ≤ 1000) is the number of columns,
-# L (1 ≤ L ≤ 1000) is the minimum number of each ingredient cells in a slice,
-# H (1 ≤ H ≤ 1000) is the maximum total number of cells of a slice
-
 #Tomato = 1 Mushroom = 0
 
 #Reading the input file and returning it as a list
@@ -71,3 +66,32 @@ def best_slice(r1, r2, _slice):
         else:
             c1 = c2
     return total
+
+def find_pizza_cut():
+    r1 = 0
+    while (r1 < R):                 #Continue the algo while there is an empty row availaible
+        r2 = r1, bestVal = -1        #start with r2 = r1
+        slice1 = []
+        while (r2 < R):
+            slice2 = []
+            res = best_slice(r1, r2, slice2)        #returns the best solution of row range r1-r2
+            if (res < bestVal):
+                r2 -= 1
+                break
+            bestVal = res
+            slice1 = slice2
+            r2 += 1
+        for i in len(slice2):
+            cut_pizza = np.append(cut_pizza, slice2[i])
+        r1 = r2 + 1
+
+# find_pizza_cut()
+# out = open("output_example.txt", "w+")
+# out.write(str())
+def main():
+    find_pizza_cut()
+    out = open("a_example_out.txt", "w+")
+    out.write(str() + "\n")
+    for cut in cut_pizza:
+        out.write("%d %d %d %d \n" % (cut_pizza[0], cut_pizza[1], cut_pizza[2], cut_pizza[3]))
+    print(cut_pizza)
