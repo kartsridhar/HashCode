@@ -4,5 +4,5 @@
 * To run the script, clone or download this repository (as a zip) and type ``` python solution.py a_example.in ``` in your terminal. Open the output text file to see results
 
 ### Extra
-* As of now, our output file is not being written properly. Will have a check and update the repo accordingly..
+* The script runs for the the example file. Will try to optimise the code in the future for better results.
 * We used this [link](https://youtu.be/TVk4C-MU8no) as a reference for better code framework. 
