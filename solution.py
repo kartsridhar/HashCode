@@ -14,8 +14,7 @@ def read_file(filename = sys.argv[1]):
     C = vals[1]
     L = vals[2]
     H = vals[3]
-    convert = [list(map(lambda t: 1 if t == 'T' else 0, r.strip()))for r in lines[1:]]
-    pizza = np.array(convert)
+    pizza = [list(map(lambda t: 1 if t == 'T' else 0, r.strip()))for r in lines[1:]]
     return R, C, L, H, pizza
 
 R, C, L, H, pizza = read_file()
@@ -57,7 +56,7 @@ def best_slice(r1, r2, _slice):
             if (Slice(r1, c1, r2, c2).__check__()):     #check if the slice is delimited by r1, r2
                 checkBefore = True
             elif (checkBefore == True):
-                _slice = np.append(_slice, Slice(r1, c1, r2, c2 - 1))       #if condition is true, push the previous slice to the list
+                _slice.append(Slice(r1, c1, r2, c2 - 1))       #if condition is true, push the previous slice to the list
                 total += _slice[-1].__size__()        #reference the last element of a list
                 break
             c2 += 1
@@ -83,14 +82,11 @@ def find_pizza_cut():
             slice1 = slice2
             r2 += 1
         for i in range(len(slice2)):
-            cut_pizza = np.append(cut_pizza, slice2[i])
+            cut_pizza.append(slice2[i])
         r1 = r2 + 1
 
-def write_output():
-    find_pizza_cut()
-    out = open("a_example_out.txt", "w+")
-    out.write(str(len(cut_pizza)) + "\n")
-    for i in cut_pizza:
-        out.write("%d %d %d %d\n", cut_pizza[i].r1, cut_pizza[i].c1, cut_pizza[i].r2, cut_pizza[i].c2)
-
-write_output()
+find_pizza_cut()
+out = open("a_example_out.txt", "w")
+out.write(str(len(cut_pizza)) + "\n")
+for i in range(len(cut_pizza)):
+    out.write("%d %d %d %d\n" % (cut_pizza[i].r1, cut_pizza[i].c1, cut_pizza[i].r2, cut_pizza[i].c2))
