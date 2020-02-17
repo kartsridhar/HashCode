@@ -1,7 +1,8 @@
 import math
 import re
 
-def readFile(path = "C:/Users/fcb10/Documents/HashCode/2020/d_quite_big.in"):
+def readFile(path):
+    path = path + ".in"
     with open(path) as f:
         maxSlices, pizzaTypes = list(map(int, f.readline().split()))
         sliceCount = list(map(int, f.readline().split()))
@@ -11,19 +12,8 @@ def readFile(path = "C:/Users/fcb10/Documents/HashCode/2020/d_quite_big.in"):
         f.readline()
     return maxSlices, pizzaTypes, numberOfSlices
 
-# The number of slices are in ascending order of number
-# length of numberOfSlices = pizzaTypes
-# Need to return the max number of slices possible to order < maxSlices
-
-# Start from the nth slice, increase the sum with the number of slices 
-# if it is lesser than the maxSlices.
-# keep decrementing the pointer from the last, update temp if the net
-# sum is > previous sum && < maxSlices
-
 # Store all the pizza slice count, return the solution with non-zero vals
-def solution():
-    maxSlices, pizzaTypes, numberOfSlices = readFile()
-
+def solution(maxSlices, pizzaTypes, numberOfSlices):
     pointer1 = pizzaTypes-1
 
     flag1 = True
@@ -56,12 +46,21 @@ def solution():
     sol.reverse()
     return sol
 
-def writeOut():
-    sol = solution()
-    out = open("d_quite_big.out", "w")
+def writeOut(path):
+    maxSlices, pizzaTypes, numberOfSlices = readFile(path)
+    sol = solution(maxSlices, pizzaTypes, numberOfSlices)
+    path = path + ".out"
+    out = open(path, "w")
     out.write(str(len(sol)) + '\n')
     string = ' '.join([str(i) for i in sol])
     out.write(string)
 
-writeOut()
+def run():
+    fileNames = ["a_example", "b_small", "c_medium", "d_quite_big", "e_also_big"]
+    for i in range(len(fileNames)):
+        maxSlices, pizzaTypes, numberOfSlices = readFile(fileNames[i])
+        sol = solution(maxSlices, pizzaTypes, numberOfSlices)
+        writeOut(fileNames[i])
+
+run()
 
