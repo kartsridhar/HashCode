@@ -58,8 +58,6 @@ def writeOut(path):
 def run():
     fileNames = ["a_example", "b_small", "c_medium", "d_quite_big", "e_also_big"]
     for i in range(len(fileNames)):
-        maxSlices, pizzaTypes, numberOfSlices = readFile(fileNames[i])
-        sol = solution(maxSlices, pizzaTypes, numberOfSlices)
         writeOut(fileNames[i])
 
 run()
